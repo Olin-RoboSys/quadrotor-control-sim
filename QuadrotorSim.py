@@ -113,14 +113,14 @@ class Quadrotor1D():
 
         ### z position plot
         self.sub3.plot(t, self.sim_data.z_pos_raw, 'r-', label='raw meas')
-        self.sub3.plot(t, self.sim_data.z_pos, 'b', label='filtered')
+        # self.sub3.plot(t, self.sim_data.z_pos, 'b', label='filtered')
         self.sub3.hlines(self.set_point_z, 0, t[self.itx-1], colors='black', linestyles='--')
         self.sub3.set_ylabel('z_pos [m]')
         self.sub3.legend(fontsize=8)
 
         ### z velocity plot
         self.sub4.plot(t, self.z_vel_raw, 'r-', label='from raw meas')
-        self.sub4.plot(t, self.sim_data.z_vel, 'b', label='filtered')
+        # self.sub4.plot(t, self.sim_data.z_vel, 'b', label='filtered')
         self.sub4.set_ylabel('z_vel [m/s]')
         self.sub4.legend(fontsize=8)
 
@@ -130,7 +130,8 @@ class Quadrotor1D():
         self.sub5.set_ylabel('Thrust [N]')
         self.sub5.legend(fontsize=8)
         
-        plt.pause(0.075)
+        # plt.pause(0.075)
+        plt.pause(0.005)
 
     def diff(self, array):
         init = np.array([0])

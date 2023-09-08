@@ -60,10 +60,9 @@ class PIDGains:
 @dataclass
 class SimulationParameters:
     """This dataclass captures relevant simulation settings"""
-    disturbance_flag: bool = False
     state_estimation_flag: bool = False
     show_animation_flag: bool = True
-    sim_time: float = 10.0
+    sim_time: float = 6.0
 
 
 def parse_args(args):
@@ -105,22 +104,19 @@ def parse_args(args):
         pid_gains.ki = float(args[2][3:])
         pid_gains.kd = float(args[3][3:])
         sim_params.sim_time = float(args[4][9:])
-        sim_params.disturbance_flag = True if args[5][17:] == 'True' else False
     elif len(args) == 7:
         pid_gains.kp = float(args[1][3:])
         pid_gains.ki = float(args[2][3:])
         pid_gains.kd = float(args[3][3:])
         sim_params.sim_time = float(args[4][9:])
-        sim_params.disturbance_flag = True if args[5][17:] == 'True' else False
-        sim_params.state_estimation_flag = True if args[6][22:] == 'True' else False
+        sim_params.state_estimation_flag = True if args[5][22:] == 'True' else False
     elif len(args) == 8:
         pid_gains.kp = float(args[1][3:])
         pid_gains.ki = float(args[2][3:])
         pid_gains.kd = float(args[3][3:])
         sim_params.sim_time = float(args[4][9:])
-        sim_params.disturbance_flag = True if args[5][17:] == 'True' else False
-        sim_params.state_estimation_flag = True if args[6][22:] == 'True' else False
-        sim_params.show_animation_flag = True if args[7][20:] == 'True' else False
+        sim_params.state_estimation_flag = True if args[5][22:] == 'True' else False
+        sim_params.show_animation_flag = True if args[6][20:] == 'True' else False
     
     return pid_gains, sim_params
 
@@ -138,8 +134,7 @@ def print_info(sim_params):
     Crazyflie 1D Altitude Control Exercise\n \
     =====================================================\n\n \
     Simulation settings: \n\n \
-    1. Disturbance  =  {sim_params.disturbance_flag}\n \
-    2. State estimator =  {sim_params.state_estimation_flag}\n \
-    3. Show animation =  {sim_params.show_animation_flag} \n \
-    4. Simulation time = {sim_params.sim_time} \n '
+    1. State estimator =  {sim_params.state_estimation_flag}\n \
+    2. Show animation =  {sim_params.show_animation_flag} \n \
+    3. Simulation time = {sim_params.sim_time} \n '
     print(intro_txt)

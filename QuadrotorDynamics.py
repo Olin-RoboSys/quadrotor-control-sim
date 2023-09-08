@@ -3,7 +3,6 @@ The quadrotor dynamics class handles the simulated dynamics
 and numerical integration of the system
 """
 
-import random
 import numpy as np
 from scipy.integrate import odeint
 
@@ -14,17 +13,14 @@ class QuadrotorDynamics1D():
 
     You do not need to edit this class
     """
-    def __init__(self, state, cfparams, disturbance=False):
+    def __init__(self, state, cfparams):
         """
         Inputs:
         - state (State dataclass):              the current state of the system
         - cfparams (CrazyflieParams dataclass): model parameter class for the crazyflie
-        - disturbance (bool):                   flag to include random force disturbance in the dynamics
         """
         self.state = state
         self.params = cfparams
-        self.disturbance = disturbance
-        self.disturbance_onset = 2.0 + float(random.randint(-2, 2)) # crude way of varying the disturbance onset (time)
         self.t = 0
         self.t0 = 0
         self.y0 = [self.state.z_pos, self.state.z_vel]
@@ -41,14 +37,8 @@ class QuadrotorDynamics1D():
         Returns:
         - dydt (list):  the time derivative of the system state
         """
-        # checks if and when to add a disturbance force
-        if self.disturbance and (self.t > self.disturbance_onset):
-            dydt = [y[1],
-                    (1/self.params.mass) * (F - self.params.mass * self.params.g - \
-                        np.random.normal(0.2, 1.0e-2))]   # disturbance force is modeled as normally distributed
-        else:
-            dydt = [y[1],
-                    (1/self.params.mass) * (F - self.params.mass * self.params.g)]
+        dydt = [y[1],
+                (1/self.params.mass) * (F - self.params.mass * self.params.g)]
         return dydt
 
     def update(self, F, time_delta):
